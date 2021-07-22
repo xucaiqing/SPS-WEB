@@ -223,6 +223,7 @@ export default {
     this.viewFlg = (this.$route.query.viewFlg==true||this.$route.query.viewFlg=='true')?true:false
     this.taskId = this.$route.query.taskId
     this.autoRefreshData('Y')
+    this.loadTaskInfoFunc(this.taskId);
   },
 
   methods: {
