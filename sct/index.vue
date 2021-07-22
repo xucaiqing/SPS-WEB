@@ -179,9 +179,16 @@ export default {
     },
 
     executeFunc(row) {
+       if (row && !row.taskId) {
+        row = row.row
+      }
       this.$router.push(
         {
-          path: '/sct/execute'
+          path: '/sct/execute',
+          query: {
+            taskId: row.taskId,
+            viewFlg: true
+          }
         })
     },
 
