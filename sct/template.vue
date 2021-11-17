@@ -93,8 +93,8 @@ export default {
       currentPage: 1,
       pageSize: 20,
       totalCount: 0,
-      queryCondition: { 
-        stepName: '' 
+      queryCondition: {
+        stepName: ''
         },
 
       dynamicValidateForm: {
@@ -107,15 +107,15 @@ export default {
         templateId:'',
       },
       rules: {
-        templateName: [{ 
-          required: true, 
-          message: '模板名必输！', 
-          trigger: 'blur' 
+        templateName: [{
+          required: true,
+          message: '模板名必输！',
+          trigger: 'blur'
           }]
       },
       stepList: [{
       }],
-      selectedList: [{ 
+      selectedList: [{
         stepName: '',
         stepDesc: '',
         stepId: ''
@@ -141,16 +141,16 @@ export default {
     this.findStepListFunc()
     this.findTemplateListFunc()
 
-    
+
   },
   methods: {
     saveFunc() {
       var that = this
       that.$refs.dynamicValidateForm.validate((valid, _n) => {
-        var p = {templateId:that.templateId, templateName: that.dynamicValidateForm.templateName, 
+        var p = {templateId:that.templateId, templateName: that.dynamicValidateForm.templateName,
           selectedList:that.selectedList, stepId :that.dynamicValidateForm.stepId, stepName:that.dynamicValidateForm.stepName,
           updateUserId: that.loginUserId, updateUserName: that.loginUserName }
-        
+
         // that.selectedList.forEach((item) => {
         //   that.stepList.forEach(step=>{
         //     if(item.stepId === step.stepId){
@@ -158,7 +158,7 @@ export default {
         //       item.stepName = step.stepName;
         //       return;
         //     }
-        //   });          
+        //   });
         // })
 
         if (p.templateName == '') {
@@ -176,7 +176,7 @@ export default {
           })
         } else {
           saveTemplate(p).then(rsp => {
-            
+
             this.$message({ showClose: true, message: rsp.rspMsg, type: 'success' })
             if (rsp && rsp.rspCode == 0) {
               that.addTemplateDialogVisible = false
@@ -184,7 +184,7 @@ export default {
             }
           })
         }
-        
+
       })
     },
 
@@ -212,7 +212,7 @@ export default {
     },
     findStepListFunc() {
       var that = this
-      findStepList({ ...this.queryCondition, ...this.ruleForm, loginUserId: this.loginUserId }).then((rsp) => {
+      findStepList({ ...this.queryCondition, ...this.ruleForm, loginUserId: this.loginUserId,pageSize:100 }).then((rsp) => {
         var l = rsp.data.stepList ? rsp.data.stepList : null
         that.stepList = l
       })
@@ -252,7 +252,7 @@ export default {
 
       }else {
         this.templateId = null
-        this.selectedList= [{ 
+        this.selectedList= [{
           stepName: '',
           stepDesc: '',
           stepId: ''
@@ -269,7 +269,7 @@ export default {
 
     deleteFunc(om){
       var p={...this.templateList,templateId:om.templateId,templateName:om.templateName, updateUserId:this.loginUserId,updateUserName:this.loginUserName},that=this
-      p.recordState='N' 
+      p.recordState='N'
       updateTemplateRecordState(p).then((rsp)=>{
         this.$message({
             type: 'info',
