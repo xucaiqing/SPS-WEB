@@ -152,6 +152,11 @@
                  <span>{{row.finishDate}}</span>
              </template>
         </el-table-column>
+        <el-table-column  label="最后更新时间">
+          <template slot-scope="{row}">
+            <span>{{row.updateDate}}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button type="primary" plain @click="checkFunc(scope.row)">查看</el-button>
@@ -173,13 +178,13 @@
         :total="totalCount">
       </el-pagination>
     </div>
-    
+
   </div>
 </template>
 
 <script>
-import { 
-  findBigAreaListByRole 
+import {
+  findBigAreaListByRole
 } from '@/api/eventapi'
 import dayjs from 'dayjs'
 import {
@@ -199,7 +204,7 @@ export default {
       bigAreaListSearch: [],
       bigAreaList: [],
       bigAreaId: '',
-      bigAreaName: '',  
+      bigAreaName: '',
       scheduleDateBegin:'',
       scheduleDateEnd:'',
       startDate:'',
@@ -249,7 +254,7 @@ export default {
   methods: {
     formatDate(value ,format ){
        return dayjs(value).format(format);
-       
+
     },
     handleClick(row) {
         console.log(row);
@@ -266,7 +271,7 @@ export default {
     },
 
     /* ---- 新增排班----*/
- 
+
     // saveFunc() {
     //   this.$refs.addScheduleForm.validate((valid, _n) => {
     //     var p = {
@@ -383,9 +388,10 @@ export default {
             userId: row.userId,
             bigAreaId: row.bigAreaId,
             bigAreaName: row.bigAreaName,
-            startDate: row.startDate, 
-            finishDate: row.finishDate, 
-            scheduleMonth: row.scheduleMonth, 
+            startDate: row.startDate,
+            finishDate: row.finishDate,
+            scheduleMonth: row.scheduleMonth,
+            showFlg:'Y'
           }
         })
     },
@@ -398,19 +404,19 @@ export default {
             userId: row.userId,
             bigAreaId: row.bigAreaId,
             bigAreaName: row.bigAreaName,
-            startDate: row.startDate, 
-            finishDate: row.finishDate, 
-            scheduleMonth: row.scheduleMonth, 
+            startDate: row.startDate,
+            finishDate: row.finishDate,
+            scheduleMonth: row.scheduleMonth,
           }
       })
     },
 
     deleteFunc(row) {
-      var p = { bigAreaId:row.bigAreaId, bigAreaName:row.bigAreaName, 
-      startDate:row.startDate, finishDate:row.finishDate, scheduleMonth:row.scheduleMonth, 
+      var p = { bigAreaId:row.bigAreaId, bigAreaName:row.bigAreaName,
+      startDate:row.startDate, finishDate:row.finishDate, scheduleMonth:row.scheduleMonth,
       updateUserId:this.loginUserId, updateUserName:this.loginUserName}
       var that = this
-      p.recordState='N' 
+      p.recordState='N'
       deleteSchedule(p).then((rsp) => {
         this.$message({
           type: 'info',
@@ -433,7 +439,7 @@ export default {
       this.currentPage = val
       this.$forceUpdate()
       this.findScheduleListFunc()
-    },    
+    },
     submitForm(formName='ruleForm'){
       let userId = this.$store.getters.users.userId ;
       if(this.ruleForm.scheduleDateBegin){
