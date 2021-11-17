@@ -216,7 +216,6 @@ export default {
     this.clear()
   },
   activated() {
-    console.log('activated')
     this.ruleForm={}
     this.initData()
     this.findTemplateListFunc()
@@ -320,7 +319,6 @@ export default {
       this.selectedRow = _row
     },
     selectOne(_row) {
-      //  debugger
       if (_row.companyType || _row.companyType >= 0) {
         this.ruleForm.companyType = '' + _row.companyType
       }
